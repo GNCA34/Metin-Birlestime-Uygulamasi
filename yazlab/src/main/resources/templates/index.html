@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metin Birleştirme</title>
+</head>
+<body>
+    <h1 style="text-align:center;">Metin Birleştirme Uygulaması</h1>
+
+
+    <form action="submit-form" method="post">
+
+        <div id="metinKutulari" ></div>
+        <br>
+        <button type="submit" style="display: block; margin: 0 auto;">Birleştirme Butonu</button>
+    </form>
+    <div style="display: flex; justify-content: center;">
+        <button onclick="metinEkle()">Metin Ekle</button>
+        <button onclick="kaydet()">Metinleri Kaydet</button>
+      </div>
+
+    <script>
+        let metinSayisi = 0;
+        function metinEkle() {
+            metinSayisi++;
+            let metinKutulariDiv = document.getElementById("metinKutulari");
+            let yeniMetinKutusu = document.createElement("input");
+            yeniMetinKutusu.type = "text";
+            yeniMetinKutusu.name = "metinler"; 
+            yeniMetinKutusu.classList.add("metinInput"); // yeni class ekle
+            let yeniMetinEtiketi = document.createElement("label");
+            yeniMetinEtiketi.setAttribute("for", "metin" + metinSayisi);
+            yeniMetinEtiketi.innerHTML = "Metin " + metinSayisi + ": ";
+            metinKutulariDiv.appendChild(yeniMetinEtiketi);
+            metinKutulariDiv.appendChild(yeniMetinKutusu);
+            metinKutulariDiv.appendChild(document.createElement("br"));  
+        }
+    
+        function kaydet() {
+    let metinKutulari = document.getElementsByClassName("metinInput");
+    let metinler = [];
+    for (const element of metinKutulari) {
+        metinler.push(element.value);
+    }
+    localStorage.setItem("metinler", JSON.stringify(metinler));
+    
+    alert("Metinler başarıyla kaydedildi!");
+}
+
+          
+    </script>
+
+    <!-- Yeni CSS kodu -->
+     <!-- Yeni CSS kodu -->
+     <style>
+        input.metinInput {
+            display:-moz-marker;
+            margin: 4px 0;
+            color: darkblue;
+        }
+
+        /* Yeni CSS kodu: metin kutuları ve butonları ortalamak için */
+        #metinEkleButonu, #kaydetButonu, #birlestirmeButonu, #metinKutulari {
+            display: block;
+            margin: auto;
+            text-align: center;
+            width: 50%;
+        }
+    </style>
+    <h1>Sonuç</h1>
+    
+	<!-- birleştirilen metin sadece metinbirlestir() methodu çalıştırıldığında gösterilsin -->
+	<p th:if="${birlesmisMetin != null}" >Birleştirilen Metin:</p>
+	<p th:if="${birlesmisMetin != null}" th:text="${birlesmisMetin}"></p>
+	<!-- çözümleme süresi sadece metinbirlestir() methodu çalıştırıldığında gösterilsin -->
+	<p th:if="${sure != null}">Algoritma Çözümleme Süresi:</p>
+	<p th:if="${sure != null}" th:text="${sure + ' milisaniye'}"></p>
+    
+        
+
+</body>
+</html>
